@@ -16,3 +16,74 @@
 </body>
 </html>
 
+const placar = {
+    largura:800,
+    altura:60,
+    corFundo:"black",
+    corTexto:"white",
+    nomeJogo:"cobrona",
+    recorde: 0,
+    pontuacao: 0,
+    desenhar(){
+    d.fillStyle=this.corFundo;
+    d.fillRect(0,0,this.largura,this.altura);
+
+    }
+
+}
+placar.desenhar()
+{
+    d.fillStyle=this.corFundo;
+    d.fillRect(0,0,this.largura,this.altura);
+    d.fillStyle=this.corTexto
+    d.font = '20px fantasy';
+    d.textAlign = 'center'
+    d.textBaseline = 'middle'
+    d.fillText(this.nomeJogo,400,30)
+    d.font = '14px fantasy';
+    d.textAlign = 'right'
+    d.textBaseline = 'bottom'
+    d.fillText("recorde "+this.recorde,780,25)
+    d.textBaseline = 'top'
+    d.fillText("vida ",780,35)
+    d.textAlign = 'left'
+    d.textBaseline = 'bottom'
+    d.fillText("Pontuação "+this.pontuacao,15,25)
+
+}
+placar.desenhar();
+
+
+const cElemento = document.querySelector("canvas");
+const d = cElemento.getContext('2d');
+
+ function setup(){
+       cElemento.width = d.width = screen.width; 
+       cElemento.height = d.height = screen.height;
+ }
+ setup();
+
+ const cobra = {
+    x:400,
+    y:260,
+    tamanho:10,
+    largura:10,
+    cor:"red",
+    desenhar(){
+        d.fillStyle=this.cor;
+        d.fillRect(this.x,this.y,this.tamanho,this.largura)
+    }
+}
+cobra.desenhar();
+
+const tela = {
+      largura : 800,
+      altura : 400,
+      cor: "green", 
+      desenhar(){
+            d.fillStyle = this.cor;
+            d.fillRect(0,60,this.largura,this.altura);
+            //d.fillRect(0,0,100,100);
+      }
+}
+tela.desenhar();
