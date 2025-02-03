@@ -114,5 +114,22 @@ placar.desenhar
         requestAnimationFrame(start)
 
 
+class Comida{
+imagem
+imagensArq="Grazy Alimento.png";
+tamanho = 20;
+constructor(x,y){
+this.x=x
+this.y=y
+this.imagem = new Image()
+this.imagem.src = this.imagensArq
+}
+    desenhar(){
+    d.drawImage(this.imagem,this.x,this.y,this.tamanho,this.tamanho)
+    }
+}
+comida.desenhar();
+
+
 }
 start();
