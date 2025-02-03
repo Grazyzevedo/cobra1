@@ -16,23 +16,17 @@
 </body>
 </html>
 
+
 const placar = {
     largura:800,
     altura:60,
-    corFundo:"black",
-    corTexto:"white",
-    nomeJogo:"cobrona",
+    corFundo:"pink",
+    corTexto:"#FF66CC",
+    nomeJogo:"Cobrona",
     recorde: 0,
     pontuacao: 0,
+    vida: 3,
     desenhar(){
-    d.fillStyle=this.corFundo;
-    d.fillRect(0,0,this.largura,this.altura);
-
-    }
-
-}
-placar.desenhar()
-{
     d.fillStyle=this.corFundo;
     d.fillRect(0,0,this.largura,this.altura);
     d.fillStyle=this.corTexto
@@ -43,15 +37,17 @@ placar.desenhar()
     d.font = '14px fantasy';
     d.textAlign = 'right'
     d.textBaseline = 'bottom'
-    d.fillText("recorde "+this.recorde,780,25)
+    d.fillText("recorde: "+this.recorde,780,25)
     d.textBaseline = 'top'
-    d.fillText("vida ",780,35)
+    d.fillText("vida: ",780,35)
     d.textAlign = 'left'
     d.textBaseline = 'bottom'
     d.fillText("Pontuação "+this.pontuacao,15,25)
+    }
 
 }
 placar.desenhar();
+
 
 
 const cElemento = document.querySelector("canvas");
@@ -63,18 +59,38 @@ const d = cElemento.getContext('2d');
  }
  setup();
 
- const cobra = {
-    x:400,
-    y:260,
-    tamanho:10,
-    largura:10,
-    cor:"red",
-    desenhar(){
-        d.fillStyle=this.cor;
-        d.fillRect(this.x,this.y,this.tamanho,this.largura)
-    }
-}
+
+const cobra = {
+ x: 400, 
+ y: 260, 
+ cor: "red", 
+ tamanho:25, 
+ vida:3,
+  direcao:"p",
+   desenhar(){ 
+    d.fillStyle=this.cor; 
+    d.fillRect(this.x, this.y, this.tamanho, this.tamanho) 
+        this.mover();
+    },
+    mover(){ 
+        if (this.direcao == "p")
+            this.x++;
+        if (this.direcao == "e")
+            this.x--; 
+        if(this.direcao == "b") 
+            this.y++;
+        if(this.direcao == "c") 
+            this.y--;
+    },
+    morrer(){ 
+         this.vida-- 
+    }   
+}  
 cobra.desenhar();
+
+
+
+
 
 const tela = {
       largura : 800,
@@ -87,3 +103,16 @@ const tela = {
       }
 }
 tela.desenhar();
+
+
+
+function start(){
+tela.desenhar
+cobra.desenhar
+placar.desenhar
+    if (cobra.vida > 0)
+        requestAnimationFrame(start)
+
+
+}
+start();
