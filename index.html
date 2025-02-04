@@ -9,15 +9,67 @@
 <body>
     <canvas></canvas>
    <script src="canvas.js"></script>
-   <script src="placar.js"></script>
    <script src="tela.js"></script>
    <script src="cobra.js"></script>
+   <script src="comida.js"></script>
+   <script src="placar.js"></script>
+   <script src="jogo.js"></script>
 
 </body>
 </html>
 
 
-const placar = {
+const cElemento = document.querySelector("canvas");
+const d = cElemento.getContext('2d');
+
+ function setup(){
+       cElemento.width = d.width = screen.width; 
+       cElemento.height = d.height = screen.height;
+ }
+ setup();
+
+
+ const cobra = {
+    cor: "white",
+    comprimento: 1,
+    x:400,
+    y:260,
+    tamanho:10,
+    largura:10,
+    direcao:"r",
+    vida:3,
+    desenhar(){
+        d.fillStyle = this.cor;
+        d.fillRect(this.x,this.y,this.tamanho,this.largura);
+    },
+    mover(){
+        if (this.direcao == 'r')
+            this.x++;
+        if (this.direcao == 'l')
+            this.x--;
+        if (this.direcao == 'd')
+            this.y++
+        if (this.direcao == 'u')
+            this.y--
+        if (this.x < 0 || this.x > (tela.largura-cobra.tamanho))
+            this.morrer();
+        if (this.y < 60 || this.y > (tela.altura+placar.altura-cobra.tamanho))
+            this.morrer();
+    },
+   
+    morrer(){
+        this.vida--;
+        this.x=400;
+        this.y=260;
+    }
+} 
+cobra.desenhar();
+cobra.mover();
+
+
+
+
+            const placar = {
     largura:800,
     altura:60,
     corFundo:"pink",
@@ -50,91 +102,66 @@ placar.desenhar();
 
 
 
-const cElemento = document.querySelector("canvas");
-const d = cElemento.getContext('2d');
-
- function setup(){
-       cElemento.width = d.width = screen.width; 
-       cElemento.height = d.height = screen.height;
- }
- setup();
 
 
-const cobra = {
- x: 400, 
- y: 260, 
- cor: "red", 
- tamanho:25, 
- vida:3,
-  direcao:"p",
-   desenhar(){ 
-    d.fillStyle=this.cor; 
-    d.fillRect(this.x, this.y, this.tamanho, this.tamanho) 
-        this.mover();
-    },
-    mover(){ 
-        if (this.direcao == "p")
-            this.x++;
-        if (this.direcao == "e")
-            this.x--; 
-        if(this.direcao == "b") 
-            this.y++;
-        if(this.direcao == "c") 
-            this.y--;
-    },
-    morrer(){ 
-         this.vida-- 
-    }   
-}  
-cobra.desenhar();
-
-
-
-
-
-const tela = {
-      largura : 800,
-      altura : 400,
-      cor: "green", 
-      desenhar(){
-            d.fillStyle = this.cor;
-            d.fillRect(0,60,this.largura,this.altura);
-            //d.fillRect(0,0,100,100);
-      }
+            const tela = {
+    largura : 800,
+    altura : 400,
+    cor: "#FF99FF", 
+    desenhar(){
+          d.fillStyle = this.cor;
+          d.fillRect(0,60,this.largura,this.altura);
+          //d.fillRect(0,0,100,100);
+    }
 }
 tela.desenhar();
 
 
 
-function start(){
-tela.desenhar
-cobra.desenhar
-placar.desenhar
-comida.desenhar
+
+
+
+            function play(){
+    tela.desenhar();
+    cobra.desenhar();
+    placar.desenhar();
+    cobra.mover();
+    comida.desenhar();
     if (cobra.vida > 0)
-        requestAnimationFrame(start)
-
-
+        requestAnimationFrame(play);
 }
-const comida = new Comida(300,300)
-start();
+const comida = new Comida(300,300);
+play();
+document.addEventListener("keydown",(e) => {
+  if (e.key == 8) cobra.direcao="u";
+  if (e.key == 6) cobra.direcao="r";
+  if (e.key == 2) cobra.direcao="d";
+  if (e.key == 4) cobra.direcao="l";
+})
 
-class Comida{
-imagem
-imagensArq="Grazy Alimento.png";
-tamanho = 20;
-constructor(x,y){
-this.x=x
-this.y=y
-this.imagem = new Image()
-this.imagem.src = this.imagensArq
-}
+
+
+
+
+
+
+
+            class Comida{
+    tamanho=25;
+    imagem;
+    imagemArq="Grazy Alimento.png";
+    constructor(x,y){
+        this.x=x;
+        this.y=y;
+        this.imagem = new Image();
+        this.imagem.src=this.imagemArq;
+    };
     desenhar(){
-    d.drawImage(this.imagem,this.x,this.y,this.tamanho,this.tamanho)
-    }
+        d.drawImage(this.imagem,
+            this.x,
+            this.y,
+            this.tamanho,
+            this.tamanho)
+    } 
 }
 comida.desenhar();
-
-
-}
-start();
